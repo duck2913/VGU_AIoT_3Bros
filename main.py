@@ -1,6 +1,8 @@
 import sys,os
 from Adafruit_IO import MQTTClient
 from dotenv import load_dotenv
+from simple_ai import *
+import time
 load_dotenv()
 
 AIO_FEED_ID = ['actuator1', 'actuator2']
@@ -37,4 +39,10 @@ client.connect()
 client.loop_background()
 
 while True:
+    image_capture()
+    image_detector()
+    time.sleep(5)
+    ai_result = image_detector()
+    print(ai_result)
+    client.publish('visiondetection', ai_result)
     pass
