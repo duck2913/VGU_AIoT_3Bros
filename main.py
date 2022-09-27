@@ -1,10 +1,12 @@
-import sys
+import sys,os
 from Adafruit_IO import MQTTClient
-
+from dotenv import load_dotenv
+load_dotenv()
 
 AIO_FEED_ID = ['actuator1', 'actuator2']
 AIO_USERNAME = "3Bros"
-AIO_KEY = "aio_rlQp90dvKFwTrfkXSZ7zZG0L1AMg"
+AIO_KEY = os.getenv('key')
+print("🚀 ~ AIO_KEY", AIO_KEY)
 
 
 def connected(client):
