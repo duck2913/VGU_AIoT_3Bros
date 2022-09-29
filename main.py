@@ -40,9 +40,7 @@ client.loop_background()
 
 while True:
     image_capture()
-    image_detector()
-    time.sleep(5)
     ai_result = image_detector()
-    print(ai_result)
     client.publish('visiondetection', ai_result)
+    time.sleep(5)
     pass
