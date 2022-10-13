@@ -3,9 +3,11 @@ from Adafruit_IO import MQTTClient
 from dotenv import load_dotenv
 from simple_ai import *
 import time
+from physical import *
+
 load_dotenv()
 
-AIO_FEED_ID = ['actuator1', 'actuator2']
+AIO_FEED_ID = ['actuator1', 'actuator2', 'sensor1', 'sensor2', 'sensor3', 'visiondetection']
 AIO_USERNAME = "3Bros"
 AIO_KEY = os.getenv('key')
 print("🚀 ~ AIO_KEY", AIO_KEY)
@@ -28,7 +30,7 @@ def disconnected(client):
 
 def message(client, feed_id, payload):
     print("Nhan du lieu: " + payload + " tu feed: " + feed_id)
-
+    setDevice1(payload)
 
 client = MQTTClient(AIO_USERNAME, AIO_KEY)
 client.on_connect = connected
@@ -39,8 +41,15 @@ client.connect()
 client.loop_background()
 
 while True:
-    image_capture()
-    ai_result = image_detector()
-    client.publish('visiondetection', ai_result)
+    # image_capture()
+    # ai_result = image_detector()
+    # client.publish('visiondetection', ai_result)
+    setDevice1(True)
+    setDevice2(True)
+    print("on")
+    time.sleep(10)
+    setDevice1(False)
+    setDevice2(False)
+    print('off')
     time.sleep(5)
     pass
