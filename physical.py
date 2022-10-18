@@ -9,7 +9,8 @@ def getPort():
     for i in range(0, N):
         port = ports[i]
         strPort = str(port)
-        if "USB Serial" in strPort: # or "FT232R" in strPort: for MacOS
+        if "USB Serial" in strPort: 
+        #if "FT232R" in strPort: (MacOS)
             splitPort = strPort.split(" ")
             commPort = (splitPort[0])
     return commPort
