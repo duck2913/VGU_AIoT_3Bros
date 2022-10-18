@@ -67,13 +67,13 @@ def readMoisture():
     time.sleep(1)
     return serial_read_data(ser)
 
-while True:
-    setDevice1(True)
-    setDevice2(True)
-    print("on")
-    time.sleep(10)
-    setDevice1(False)
-    setDevice2(False)
-    print('off')
-    time.sleep(10)
+# while True:
+#     setDevice1(True)
+#     setDevice2(True)
+#     print("on")
+#     time.sleep(10)
+#     setDevice1(False)
+#     setDevice2(False)
+#     print('off')
+#     time.sleep(10)
 

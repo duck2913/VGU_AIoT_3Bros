@@ -1,7 +1,7 @@
 import sys,os
 from Adafruit_IO import MQTTClient
 from dotenv import load_dotenv
-from simple_ai import *
+# from simple_ai import *
 import time
 from physical import *
 
@@ -51,7 +51,12 @@ while True:
     # setDevice1(False)
     # setDevice2(False)
     # print('off')
-    print(readTemperature())
-    print(readMoisture())
+
+    temperature = readTemperature() / 100
+    print(temperature)
+    client.publish('sensor1', temperature)
+    moisture = readMoisture() / 100
+    print(moisture)
+    client.publish('sensor2', moisture)
     time.sleep(5)
     pass
