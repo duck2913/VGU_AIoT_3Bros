@@ -9,8 +9,9 @@ def getPort():
     for i in range(0, N):
         port = ports[i]
         strPort = str(port)
-        if "USB Serial" in strPort: 
-        #if "FT232R" in strPort: (MacOS)
+        # if "/dev/ttyUSB0" in strPort: # for Linux
+        if "USB Serial" in strPort: # for Windows
+        # if "FT232R" in strPort: # for MacOS
             splitPort = strPort.split(" ")
             commPort = (splitPort[0])
     return commPort
@@ -67,13 +68,13 @@ def readMoisture():
     time.sleep(1)
     return serial_read_data(ser)
 
-# while True:
-#     setDevice1(True)
-#     setDevice2(True)
-#     print("on")
-#     time.sleep(10)
-#     setDevice1(False)
-#     setDevice2(False)
-#     print('off')
-#     time.sleep(10)
+while True:
+    setDevice1(True)
+    setDevice2(True)
+    print("on")
+    time.sleep(10)
+    setDevice1(False)
+    setDevice2(False)
+    print('off')
+    time.sleep(10)
 
