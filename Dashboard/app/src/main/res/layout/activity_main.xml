@@ -11,20 +11,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="bottom"
         android:background="@drawable/header_bg"
-        android:padding="12dp"
-        >
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="12dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Dashboard"
             android:textColor="#fafafa"
-            android:textSize="30sp"
-            />
+            android:textSize="30sp" />
 
     </LinearLayout>
 
@@ -33,34 +32,56 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="189dp"
         android:layout_weight="6"
         android:orientation="vertical"
-        android:weightSum="2"
         android:padding="16dp"
-        >
+        android:weightSum="2">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:weightSum="2">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Plant Status: "
+                android:paddingHorizontal="10dp"
+                android:textStyle="bold"
+                android:textSize="28dp" />
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#ffa2a2"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:weightSum="2"
-            android:padding="16dp"
-            >
+            android:padding="5dp"
+            android:weightSum="2">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
                 android:layout_margin="12dp"
+                android:layout_weight="1"
                 android:background="#fff"
-                >
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -70,43 +91,44 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/txtTemperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="23°C"
-                        android:textSize="40dp"
                         android:textColor="#ffa2a2"
-                        android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:textSize="40dp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="18dp"
-                        android:text="Temperature" />
+                        android:text="Temperature"
+                        android:textStyle="bold"
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
                 android:layout_margin="12dp"
+                android:layout_weight="1"
                 android:background="#fff"
-                >
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView3"
@@ -116,8 +138,8 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/txtHumidity"
                         android:layout_width="wrap_content"
@@ -127,12 +149,14 @@
                         android:textColor="#a2d2ff"
                         android:textSize="40dp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="18dp"
-                        android:text="Humidity" />
+                        android:text="Humidity"
+                        android:textStyle="bold"
+                        android:textSize="18dp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -141,89 +165,91 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:weightSum="2"
-            android:padding="16dp"
-            >
+            android:padding="5dp"
+            android:weightSum="2">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
                 android:layout_margin="12dp"
+                android:layout_weight="1"
                 android:background="#fff"
-                >
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView4"
-                        android:layout_width="110dp"
-                        android:layout_height="148dp"
+                        android:layout_width="97dp"
+                        android:layout_height="132dp"
                         app:srcCompat="@drawable/fan" />
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
+
                     <ToggleButton
                         android:id="@+id/btnLED"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="22dp"
-                        android:text="Fan" />
+                        android:text="Fan"
+                        android:textStyle="bold"
+                        android:textSize="18dp" />
 
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
                 android:layout_margin="12dp"
+                android:layout_weight="1"
                 android:background="#fff"
-                >
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView5"
                         android:layout_width="52dp"
-                        android:layout_height="148dp"
+                        android:layout_height="132dp"
                         app:srcCompat="@drawable/water_pump" />
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
+
                     <ToggleButton
                         android:id="@+id/btnPUMP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="22dp"
-                        android:text="Pump" />
+                        android:text="Pump"
+                        android:textStyle="bold"
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 

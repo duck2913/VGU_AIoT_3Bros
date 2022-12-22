@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -17,15 +18,18 @@ import java.nio.charset.Charset;
 
 public class MainActivity extends AppCompatActivity {
     MQTTHelper mqttHelper;
-    TextView txtTemp, txtHumi;
+    TextView txtTemp, txtHumi, txtStatus;
     ToggleButton btnLED, btnPUMP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         startMQTT();
 
+        txtStatus = findViewById(R.id.txtStatus);
         txtTemp = findViewById(R.id.txtTemperature);
         txtHumi = findViewById(R.id.txtHumidity);
         btnLED = findViewById(R.id.btnLED);
@@ -74,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     txtTemp.setText(message.toString());
                 } else if(topic.contains("sensor2")) {
                     txtHumi.setText(message.toString() + "%");
+                } else if(topic.contains("visiondetection")){
+                    txtStatus.setText(message.toString());
                 }
             }
 
