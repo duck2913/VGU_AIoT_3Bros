@@ -64,8 +64,8 @@
 
                     <ImageView
                         android:id="@+id/imageView2"
-                        android:layout_width="94dp"
-                        android:layout_height="40dp"
+                        android:layout_width="93dp"
+                        android:layout_height="60dp"
                         app:srcCompat="@drawable/temperature" />
 
                     <ImageView
@@ -77,8 +77,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="23°C"
-                        android:textSize="40dp"
-                        android:textColor="#ffa2a2"
+                        android:textSize="60dp"
+                        android:textColor="#a2d2ff"
                         android:textStyle="bold"
                         android:gravity="center"/>
 
@@ -86,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="18dp"
+                        android:textSize="26dp"
                         android:text="Temperature" />
 
                 </LinearLayout>
@@ -111,7 +111,7 @@
                     <ImageView
                         android:id="@+id/imageView3"
                         android:layout_width="93dp"
-                        android:layout_height="44dp"
+                        android:layout_height="54dp"
                         app:srcCompat="@drawable/humidity" />
 
                     <ImageView
@@ -124,14 +124,14 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="80%"
-                        android:textColor="#a2d2ff"
-                        android:textSize="40dp"
+                        android:textColor="#cdb4db"
+                        android:textSize="50dp"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="18dp"
+                        android:textSize="26dp"
                         android:text="Humidity" />
                 </LinearLayout>
 
