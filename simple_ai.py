@@ -10,7 +10,7 @@ cam = cv2.VideoCapture(0)
 # Load the model and the labels
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = clip.load("ViT-L/14", device=device)
-labels = ["Healthy", "Diseased","Withered","Other"]
+labels = ["Healthy", "Diseased", "Withered", "Other"]
 
 # Define a function to capture image
 def image_capture():
