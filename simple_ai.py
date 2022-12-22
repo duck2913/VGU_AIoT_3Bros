@@ -9,7 +9,7 @@ cam = cv2.VideoCapture(0)
 # Load the model
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = clip.load("ViT-L/14", device=device)
-
+labels = ["healthy plant", "diseased plant","withered plant","other"]
 def image_capture():
     ret,frame = cam.read()
     cv2.imwrite ("result.png",frame)
@@ -58,7 +58,9 @@ def image_detector():
         image = preprocess(image).unsqueeze(0).to(device)
         logits_per_image = model(image, text)
         probs = logits_per_image.softmax(dim=-1).cpu().numpy()
-    return probs
+        ind = np.argmax(probs)
+    return labels[ind]
+    
 
 
 
