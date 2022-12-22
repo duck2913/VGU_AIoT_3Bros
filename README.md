@@ -7,6 +7,7 @@ keras
 Pillow  
 opencv-python  
 pyserial  
+torch   
 ftfy   
 regex  
 tqdm 
