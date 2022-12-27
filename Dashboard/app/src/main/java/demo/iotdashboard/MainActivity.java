@@ -1,11 +1,15 @@
 package demo.iotdashboard;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -20,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     MQTTHelper mqttHelper;
     TextView txtTemp, txtHumi, txtStatus;
     ToggleButton btnLED, btnPUMP;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog dialog;
+    Button setting_save, setting_cancel;
+    EditText temperatureLimit, humidityLimit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,5 +113,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void changeLayout(View view){
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View settingPopupView = getLayoutInflater().inflate(R.layout.setting_layout, null);
+
+
+        dialogBuilder.setView(settingPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
     }
 }
