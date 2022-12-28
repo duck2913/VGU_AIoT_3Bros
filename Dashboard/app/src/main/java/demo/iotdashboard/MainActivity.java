@@ -1,14 +1,28 @@
 package demo.iotdashboard;
 
+import static java.sql.DriverManager.println;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.Button;
+import java.util.Random;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog dialog;
     Button saveButton, cancelButton;
     EditText maxTemperature, minTemperature, maxHumidity, minHumidity;
+    int maxTemp = -1, minTemp = -1, maxHumid = -1, minHumid = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         txtHumi = findViewById(R.id.txtHumidity);
         btnLED = findViewById(R.id.btnLED);
         btnPUMP = findViewById(R.id.btnPUMP);
+
         btnLED.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -76,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     public void startMQTT(){
         mqttHelper = new MQTTHelper(this);
         // Lambda instruction or Asynchronous instruction
+
         mqttHelper.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean reconnect, String serverURI) {
@@ -89,32 +106,29 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                Log.d("TEST", topic + " *** " + message.toString());
                 if(topic.contains("sensor1")) {
                     txtTemp.setText(message.toString() + "℃");
-                    if(Integer.parseInt(message.toString()) > 30){
-                        txtTemp.setText("over");
-                        NotificationManager notificationManager =
-                                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                        int notifyId = 1;
-                        String channelId = "some_channel_id";
-
-                        Notification notification = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            notification = new Notification.Builder(MainActivity.this)
-                                    .setContentTitle("IoT Dashboard")
-                                    .setContentText("Overheat!")
-                                    .setSmallIcon(R.drawable.icon)
-                                    .setChannelId(channelId)
-                                    .build();
-                        }
-
-                        notificationManager.notify(notifyId, notification);
-
+                    if(maxTemp == -1 || minTemp == -1) return;
+                    int currentTemp = Integer.parseInt(message.toString());
+                    if(currentTemp > minTemp && currentTemp < maxTemp) {
+                        sendDataMQTT("3Bros/feeds/actuator1", "0");
+                        sendDataMQTT("3Bros/feeds/heating_system", "0");
+                        return;
+                    };
+                    createNotification(currentTemp);
+                    if(currentTemp > maxTemp ) {
+                        sendDataMQTT("3Bros/feeds/actuator1", "1");
+                        sendDataMQTT("3Bros/feeds/heating_system", "0");
                     }
-                } else if(topic.contains("sensor2")) {
+                    if(currentTemp < minTemp ) {
+                        sendDataMQTT("3Bros/feeds/heating_system", "1");
+                        sendDataMQTT("3Bros/feeds/actuator1", "0");
+                    }
+                }
+                else if(topic.contains("sensor2")) {
                     txtHumi.setText(message.toString() + "%");
-                } else if(topic.contains("visiondetection")){
+                }
+                else if(topic.contains("visiondetection")){
                     txtStatus.setText(message.toString());
                 }
             }
@@ -167,6 +181,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // define save button function here
+                int minTempInput =  Integer.parseInt(minTemperature.getText().toString());
+                int maxTempInput = Integer.parseInt(maxTemperature.getText().toString());
+                int minHumidInput = Integer.parseInt(minHumidity.getText().toString());
+                int maxHumidInput = Integer.parseInt(maxHumidity.getText().toString());
+                maxTemp = maxTempInput;
+                minTemp = minTempInput;
+                maxHumid = maxHumidInput;
+                minHumid = minHumidInput;
             }
         });
 
@@ -190,24 +212,37 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setAttributes(layoutParams);
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        String channelId = "some_channel_id";
-        CharSequence channelName = "Some Channel";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel notificationChannel = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            notificationChannel = new NotificationChannel(channelId, channelName, importance);
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.enableVibration(true);
-            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            notificationManager.createNotificationChannel(notificationChannel);
+    public void createNotification(int currentTemp){
+        String id = "my_channel_id_01";
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            NotificationChannel channel =manager.getNotificationChannel(id);
+            if(channel ==null)
+            {
+                channel = new NotificationChannel(id,"Channel Title", NotificationManager.IMPORTANCE_HIGH);
+                //config nofication channel
+                channel.setDescription("[Channel description]");
+                channel.enableVibration(true);
+                channel.setVibrationPattern(new long[]{100,1000,200,340});
+                channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+                manager.createNotificationChannel(channel);
+            }
         }
-
+        Intent notificationIntent = new Intent(this,MainActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(this,0,notificationIntent,0);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,id)
+                .setSmallIcon(R.drawable.icon)
+                .setContentTitle("The temperature is not okay")
+                .setContentText(currentTemp > maxTemp ? "Current temperature is higher than max temp" :"Current temperature is lower than max temp")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVibrate(new long[]{100,1000,200,340})
+                .setAutoCancel(false)//true touch on notificaiton menu dismissed, but swipe to dismiss
+                .setTicker("Nofiication");
+        builder.setContentIntent(contentIntent);
+        NotificationManagerCompat m = NotificationManagerCompat.from(getApplicationContext());
+        //id to generate new notification in list notifications menu
+        m.notify(new Random().nextInt(),builder.build());
     }
 }
