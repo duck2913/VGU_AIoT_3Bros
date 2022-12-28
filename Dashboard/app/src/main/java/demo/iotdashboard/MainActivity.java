@@ -1,31 +1,13 @@
 package demo.iotdashboard;
 
-import static java.sql.DriverManager.println;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.Button;
-import java.util.Random;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -34,12 +16,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.nio.charset.Charset;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     MQTTHelper mqttHelper;
@@ -189,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 minTemp = minTempInput;
                 maxHumid = maxHumidInput;
                 minHumid = minHumidInput;
+                dialog.dismiss();
             }
         });
 
@@ -235,7 +224,8 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,id)
                 .setSmallIcon(R.drawable.icon)
                 .setContentTitle("The temperature is not okay")
-                .setContentText(currentTemp > maxTemp ? "Current temperature is higher than max temp" :"Current temperature is lower than max temp")
+                .setContentText(currentTemp > maxTemp ?
+                        "Current temperature is higher than " + maxTemp + "!" :"Current temperature is lower than " + minTemp + "!")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setVibrate(new long[]{100,1000,200,340})
                 .setAutoCancel(false)//true touch on notificaiton menu dismissed, but swipe to dismiss
