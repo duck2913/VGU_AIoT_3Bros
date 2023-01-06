@@ -1,5 +1,5 @@
 # VGU_AIoT_3Bros
-This is an application that applies AIoT technology into smart agriculture scenarios. This app helps farmers observe plant status (through an AI system) as well as the temperature and humidity (through sensors) of the farm. It allows farmers to set temperature and humidity limits and notifies them when the two factors get over or below the limits. When notified, farmers can turn on fans and pumps to adjust temperature and humidity level as they desire.
+This is an application that applies AIoT technology to smart agriculture scenarios. This app helps farmers observe plant status (through an AI system) and the farm's temperature and humidity (through sensors). It allows farmers to set temperature and humidity limits and notifies them when the two factors get over or below the limits. When notified, farmers can turn on fans and pumps to adjust temperature and humidity levels as they desire.
 
 ## Demo images of the app 
 
